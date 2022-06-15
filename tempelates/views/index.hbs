@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap demo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+  </head>
+  <style>
+      body{
+          background-color: #262626;
+      }
+      .flex{
+          display: flex;
+          justify-content: center;
+          align-items: center;
+      }
+      #container{
+          margin: auto;
+          color: white;
+          /* border: 1px solid white; */
+          width: 600px;
+          height: 600px;
+          flex-direction: column;
+      }
+      .form{
+          flex-direction: column;
+      }
+      /* .container2{
+          flex-direction: column;
+      } */
+      input{
+          background: none;
+          outline: none;
+          margin: 20px 0;
+          border: none;
+          padding-left: 10px;
+          border-bottom: 1px solid white;
+          color: white;
+          width: 300px;
+      }
+      #submit{
+          border: 1px solid green;
+          border-radius: 50px;
+          color: green;
+          padding: 10px;
+          margin: 20px 0;
+          width: 200px;
+      }
+      .clc{
+          font-size: 30px;
+          flex-direction: column;
+          text-align: center;
+          color: rgb(0, 255, 251);
+          margin-right: 20px;
+          border-right: 3px solid rgb(0, 255, 251);
+          padding-right: 20px;
+          height: 400px;
+      }
+      #result{
+          color: rgb(0, 255, 251);;
+          font-size: 20px;
+          margin: 20px 0;
+      }
+      span{
+          color: #fff000;
+          font-size: 25px;
+      }
+      /* #DailyScan{
+        color: red;
+      } */
+      
+  </style>
+  <body>
+    <div class="container-fluid main_menu">
+        <div class="row">
+            <div class="col-md-10 col-12 mx-auto">
+                <nav class="navbar navbar-expand-lg bg-primary">
+                    <div class="container-fluid ">
+                      <a class="navbar-brand text-light" href="#"><i class="fa-solid fa-snowflake"></i>AHT Express<i class="fa-solid fa-snowflake"></i></a>
+                      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                      </button>
+                      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav ms-auto mb-2 mb-lg-0 text-light">
+                          <li class="nav-item text-light">
+                            <a class="nav-link active text-dark" aria-current="page" href="/">AHT</a>
+                          </li>
+                          <li class="nav-item text-light">
+                            <a class="nav-link text-light" href="/">Accuracy</a>
+                          </li>
+                          <li class="nav-item text-light">
+                            <a class="nav-link text-warning" href="/">Incentive</a>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </nav>
+            </div>
+            <div class="flex" id="container">
+                <div class="flex container2">
+                    <div class="flex clc">Calculation <br> of <br> AHT</div>
+                    <form action="" class="flex form">
+                        <input type="text" placeholder="Number of total Scan in PD" id="scanPd">
+                        <input type="text" placeholder="MTD AHT" id="mtd">
+                        <input type="text" placeholder="Target AHT" id="target">
+                        <input type="text" placeholder="Days within you want to Achieve AHT" id="days">
+                        <input type="text" placeholder="Daily Scan" id="scanDaily">
+                        <input type="submit" value="Calculate AHT" id="submit">
+                    </form>
+                </div>
+                <div id="result">You Need <span id="DailyScan">0</span> Scans daily with <span id="DailyAht">0</span> Sec AHT in next <span id="NumDays">0</span> Days</div>
+            </div>
+                
+        </div>
+
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+    <script>
+      let scanPd = document.getElementById("scanPd");
+      let mtd = document.getElementById("mtd");
+      let target = document.getElementById("target");
+      let scanDaily = document.getElementById("scanDaily");
+      let days = document.getElementById("days");
+      let submit = document.getElementById("submit");
+      let result = document.getElementById("result");
+      let DailyScan = document.getElementById("DailyScan");
+      let DailyAht = document.getElementById("DailyAht");
+      let NumDays = document.getElementById("NumDays");
+
+      submit.addEventListener("click", (event) => {
+        event.preventDefault();
+        DailyScan.innerHTML = scanDaily.value;
+        NumDays.innerHTML = days.value;
+        let A = parseInt(scanPd.value);
+        let B = parseInt(mtd.value);
+        let C = parseInt(days.value);
+        let D = parseInt(scanDaily.value);
+        let E = parseInt(target.value);
+
+        DailyAht.innerHTML = ((((A + (C * D)) * E) - (A * B)) / (C * D)).toFixed(2);
+
+        if(scanPd.value == "" || mtd.value == "" || target.value == "" || scanDaily.value == ""){
+          result.innerHTML = "Please Enter All field";
+        }
+        // }else{
+        //   result.innerHTML = `You Need <span id="DailyScan">151</span> Scans daily with <span id="DailyAht">63</span> Sec AHT in next <span id="NumDays">7</span> Days</div>`;
+        // }
+      })
+    </script>
+  </body>
+</html>
